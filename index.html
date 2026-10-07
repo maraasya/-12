@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta
+        name="description"
+        content="INK Calculator — современный научный калькулятор"
+    >
+
+    <title>影 — Ink Calculator</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+
+
+<div class="ink ink-1"></div>
+<div class="ink ink-2"></div>
+<div class="ink ink-3"></div>
+
+
+
+
+<div class="app">
+
+    <div class="calculator">
+
+
+
+        <aside class="sidebar">
+
+           
+
+            <div class="logo">
+
+                <div class="logo-symbol">
+                    影
+                </div>
+
+                <div class="logo-text">
+
+                    <h1>INK</h1>
+
+                    <span>
+                        precision calculator
+                    </span>
+
+                </div>
+
+            </div>
+
+
+         
+
+            <div class="status">
+
+                <span class="status-dot"></span>
+
+                SYSTEM READY
+
+            </div>
+
+
+            
+
+            <div class="side-title">
+                navigation
+            </div>
+
+            <div class="side-buttons">
+
+    <button
+        class="side-btn active"
+        id="calculatorTab"
+    >
+        <span>
+            Калькулятор
+        </span>
+
+        <kbd>
+            01
+        </kbd>
+    </button>
+
+
+    <button
+        class="side-btn"
+        id="historyTab"
+    >
+        <span>
+            История
+        </span>
+
+        <kbd>
+            02
+        </kbd>
+    </button>
+
+
+    <button
+        class="side-btn"
+        id="scientificTab"
+    >
+        <span>
+            Инженерный режим
+        </span>
+
+        <kbd>
+            03
+        </kbd>
+    </button>
+
+
+    
+
+    <button
+        class="side-btn"
+        id="solutionsTab"
+        onclick="toggleSolutions()"
+    >
+        <span>
+            Решения и примеры
+        </span>
+
+        <kbd>
+            04
+        </kbd>
+    </button>
+
+</div>
+
+
+           
+
+            <div class="side-title">
+                information
+            </div>
+
+            <div class="side-buttons">
+
+                <button
+                    class="side-btn"
+                    onclick="showAbout()"
+                >
+
+                    <span>
+                        О калькуляторе
+                    </span>
+
+                    <kbd>
+                        i
+                    </kbd>
+
+                </button>
+
+
+                <button
+                    class="side-btn"
+                    onclick="clearHistory()"
+                >
+
+                    <span>
+                        Очистить историю
+                    </span>
+
+                    <kbd>
+                        ×
+                    </kbd>
+
+                </button>
+
+            </div>
+
+
+          
+
+            <div class="memory-box">
+
+                <div class="memory-label">
+                    MEMORY
+                </div>
+
+                <div
+                    class="memory-value"
+                    id="memoryValue"
+                >
+                    0
+                </div>
+
+                <div class="memory-actions">
+
+                    <button
+                        class="memory-btn"
+                        onclick="memoryClear()"
+                    >
+                        MC
+                    </button>
+
+                    <button
+                        class="memory-btn"
+                        onclick="memoryRecall()"
+                    >
+                        MR
+                    </button>
+
+                    <button
+                        class="memory-btn"
+                        onclick="memoryAdd()"
+                    >
+                        M+
+                    </button>
+
+                    <button
+                        class="memory-btn"
+                        onclick="memorySubtract()"
+                    >
+                        M-
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+       
+
+        <main class="main">
+
+
+            
+
+            <div class="topbar">
+
+                <div class="topbar-left">
+
+                    <div
+                        class="mode active"
+                        id="degreeMode"
+                        onclick="setAngleMode('DEG')"
+                    >
+                        DEG
+                    </div>
+
+                    <div
+                        class="mode"
+                        id="radianMode"
+                        onclick="setAngleMode('RAD')"
+                    >
+                        RAD
+                    </div>
+
+                </div>
+
+
+                <div class="top-actions">
+
+                    <button
+                        class="icon-btn"
+                        onclick="copyResult()"
+                        title="Копировать результат"
+                    >
+                        ⧉
+                    </button>
+
+                    <button
+                        class="icon-btn"
+                        onclick="toggleHistory()"
+                        title="История"
+                    >
+                        ☷
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            
+
+            <section class="display">
+
+                <div
+                    class="expression"
+                    id="expression"
+                >
+                    0
+                </div>
+
+                <div
+                    class="result"
+                    id="result"
+                >
+                    0
+                </div>
+
+            </section>
+
+
+          
+
+            <div class="toolbar">
+
+                <div class="toolbar-left">
+
+                    <button
+                        class="tool-btn"
+                        id="scientificToggle"
+                        onclick="toggleScientific()"
+                    >
+                        SCI
+                    </button>
+
+                    <button
+                        class="tool-btn"
+                        onclick="insertValue('(')"
+                    >
+                        (
+                    </button>
+
+                    <button
+                        class="tool-btn"
+                        onclick="insertValue(')')"
+                    >
+                        )
+                    </button>
+
+                </div>
+
+
+                <div class="shortcut">
+                    KEYBOARD ENABLED
+                </div>
+
+            </div>
+
+
+           
+
+            <div
+                class="scientific"
+                id="scientificPanel"
+            >
+
+                <button onclick="scientific('sin')">
+                    sin
+                </button>
+
+                <button onclick="scientific('cos')">
+                    cos
+                </button>
+
+                <button onclick="scientific('tan')">
+                    tan
+                </button>
+
+                <button onclick="scientific('asin')">
+                    asin
+                </button>
+
+                <button onclick="scientific('acos')">
+                    acos
+                </button>
+
+                <button onclick="scientific('atan')">
+                    atan
+                </button>
+
+                <button onclick="scientific('log')">
+                    log
+                </button>
+
+                <button onclick="scientific('ln')">
+                    ln
+                </button>
+
+                <button onclick="scientific('sqrt')">
+                    √x
+                </button>
+
+                <button onclick="scientific('square')">
+                    x²
+                </button>
+
+                <button onclick="scientific('cube')">
+                    x³
+                </button>
+
+                <button onclick="scientific('inverse')">
+                    1/x
+                </button>
+
+                <button onclick="scientific('factorial')">
+                    x!
+                </button>
+
+                <button onclick="insertValue('π')">
+                    π
+                </button>
+
+                <button onclick="insertValue('e')">
+                    e
+                </button>
+
+                <button onclick="scientific('abs')">
+                    |x|
+                </button>
+
+                <button onclick="scientific('floor')">
+                    floor
+                </button>
+
+                <button onclick="scientific('ceil')">
+                    ceil
+                </button>
+
+            </div>
+
+
+            
+
+            <section class="buttons">
+
+
+               
+
+                <button
+                    class="calc-btn danger"
+                    onclick="clearAll()"
+                >
+                    AC
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="backspace()"
+                >
+                    ⌫
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="toggleSign()"
+                >
+                    ±
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="percent()"
+                >
+                    %
+                </button>
+
+                <button
+                    class="calc-btn operator"
+                    onclick="insertOperator('/')"
+                >
+                    ÷
+                </button>
+
+
+              
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('7')"
+                >
+                    7
+                </button>
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('8')"
+                >
+                    8
+                </button>
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('9')"
+                >
+                    9
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="scientific('sqrt')"
+                >
+                    √
+                </button>
+
+                <button
+                    class="calc-btn operator"
+                    onclick="insertOperator('*')"
+                >
+                    ×
+                </button>
+
+
+    
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('4')"
+                >
+                    4
+                </button>
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('5')"
+                >
+                    5
+                </button>
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('6')"
+                >
+                    6
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="scientific('square')"
+                >
+                    x²
+                </button>
+
+                <button
+                    class="calc-btn operator"
+                    onclick="insertOperator('-')"
+                >
+                    −
+                </button>
+
+
+               
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('1')"
+                >
+                    1
+                </button>
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('2')"
+                >
+                    2
+                </button>
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputNumber('3')"
+                >
+                    3
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="scientific('factorial')"
+                >
+                    x!
+                </button>
+
+                <button
+                    class="calc-btn operator"
+                    onclick="insertOperator('+')"
+                >
+                    +
+                </button>
+
+
+           
+
+                <button
+                    class="calc-btn number span-2"
+                    onclick="inputNumber('0')"
+                >
+                    0
+                </button>
+
+                <button
+                    class="calc-btn number"
+                    onclick="inputDecimal()"
+                >
+                    .
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="insertValue('π')"
+                >
+                    π
+                </button>
+
+                <button
+                    class="calc-btn equals"
+                    onclick="calculate()"
+                >
+                    =
+                </button>
+
+
+            
+
+                <button
+                    class="calc-btn special"
+                    onclick="scientific('sin')"
+                >
+                    sin
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="scientific('cos')"
+                >
+                    cos
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="scientific('tan')"
+                >
+                    tan
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="insertOperator('^')"
+                >
+                    xʸ
+                </button>
+
+                <button
+                    class="calc-btn special"
+                    onclick="scientific('inverse')"
+                >
+                    1/x
+                </button>
+
+            </section>
+
+
+            
+
+            <div class="footer">
+
+                <span>
+                    INK CALCULATOR / 2026
+                </span>
+
+                <span>
+                    ENTER = CALCULATE
+                </span>
+
+            </div>
+
+        </main>
+
+
+        
+
+        <aside
+            class="history"
+            id="historyPanel"
+        >
+
+            <div class="history-header">
+
+                <h2>
+                    HISTORY
+                </h2>
+
+                <button
+                    class="close-history"
+                    onclick="toggleHistory()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div
+                class="history-list"
+                id="historyList"
+            ></div>
+
+        </aside>
+        
+
+        <aside
+            class="solutions"
+            id="solutionsPanel"
+        >
+
+            <div class="solutions-header">
+
+                <div>
+
+                    <span class="solutions-kicker">
+                        KNOWLEDGE BASE
+                    </span>
+
+                    <h2>
+                        РЕШЕНИЯ
+                    </h2>
+
+                    <p>
+                        Примеры вычислений и сохранённые решения
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="solutions-close"
+                    onclick="toggleSolutions()"
+                    title="Закрыть"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+           
+
+            <div class="solutions-filters">
+
+                <button
+                    class="solution-filter active"
+                    onclick="filterSolutions('all')"
+                >
+                    ВСЕ
+                </button>
+
+
+                <button
+                    class="solution-filter"
+                    onclick="filterSolutions('basic')"
+                >
+                    BASIC
+                </button>
+
+
+                <button
+                    class="solution-filter"
+                    onclick="filterSolutions('science')"
+                >
+                    SCI
+                </button>
+
+
+                <button
+                    class="solution-filter"
+                    onclick="filterSolutions('saved')"
+                >
+                    МОИ
+                </button>
+
+            </div>
+
+
+            
+
+            <div
+                class="solutions-list"
+                id="solutionsList"
+            ></div>
+
+
+            
+
+            <div class="solution-add">
+
+                <div class="solution-add-title">
+                    ДОБАВИТЬ ПРИМЕР
+                </div>
+
+
+                <input
+                    type="text"
+                    id="solutionQuestion"
+                    placeholder="Например: 25 + 17"
+                >
+
+
+                <textarea
+                    id="solutionSteps"
+                    placeholder="Например: 25 + 17 = 42"
+                ></textarea>
+
+
+                <input
+                    type="text"
+                    id="solutionAnswer"
+                    placeholder="Ответ: 42"
+                >
+
+
+                <button
+                    class="solution-save-btn"
+                    onclick="saveSolution()"
+                >
+                    + СОХРАНИТЬ ПРИМЕР
+                </button>
+
+            </div>
+
+
+            
+
+            <button
+                class="solution-clear-btn"
+                onclick="clearSolutions()"
+            >
+                × ОЧИСТИТЬ МОИ ПРИМЕРЫ
+            </button>
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+
+
+<div
+    class="toast-container"
+    id="toastContainer"
+></div>
+
+
+
+<script src="javasscript.js"></script>
+
+</body>
+
+</html>
